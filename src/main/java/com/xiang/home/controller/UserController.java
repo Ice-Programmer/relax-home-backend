@@ -91,4 +91,20 @@ public class UserController {
         User user = userService.getLoginUser(request);
         return ResultUtils.success(userService.getLoginUserVO(user));
     }
+
+    /**
+     * User Logout
+     *
+     * @param request cookie
+     * @return User logout successfully
+     */
+    @PostMapping("/logout")
+    @ApiOperation(value = "Current Logged-in User Logout")
+    public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
+        if (request == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        boolean result = userService.userLogout(request);
+        return ResultUtils.success(result);
+    }
 }

@@ -138,7 +138,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return currentUser;
     }
 
-
+    @Override
+    public boolean userLogout(HttpServletRequest request) {
+        if (request.getSession().getAttribute(USER_LOGIN_STATE) == null) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "Not Login yet!");
+        }
+        // remove user login state
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return true;
+    }
 }
 
 

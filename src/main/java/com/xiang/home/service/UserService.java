@@ -50,4 +50,13 @@ public interface UserService extends IService<User> {
      * @return Current Login User
      */
     User getLoginUser(HttpServletRequest request);
+
+    /**
+     * User Logout
+     *
+     * @param request cookie
+     * @return User Logout Successfully
+     */
+    boolean userLogout(HttpServletRequest request);
+
 }
