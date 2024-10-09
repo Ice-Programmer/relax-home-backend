@@ -13,7 +13,7 @@ create table if not exists user
     email        varchar(512)                           null comment 'email',
     userName     varchar(256)                           null comment 'user nickname',
     userAvatar   varchar(1024)                          null comment 'user avatar',
-    userRole     varchar(256) default 'employee'        not null comment 'user role：tenant/landlord/admin/ban',
+    userRole     varchar(256) default 'tenant'          not null comment 'user role：tenant/landlord/admin/ban',
     createTime   datetime     default CURRENT_TIMESTAMP not null comment 'create time',
     updateTime   datetime     default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment 'update time',
     isDelete     tinyint      default 0                 not null comment 'is delete',
