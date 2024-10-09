@@ -8,6 +8,7 @@ import com.xiang.home.common.ErrorCode;
 import com.xiang.home.constant.UserConstant;
 import com.xiang.home.exception.BusinessException;
 import com.xiang.home.model.entity.User;
+import com.xiang.home.model.enums.UserRoleEnum;
 import com.xiang.home.model.vo.LoginUserVO;
 import com.xiang.home.service.UserService;
 import com.xiang.home.mapper.UserMapper;
@@ -36,7 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public static final String SALT = "xiang";
 
     @Override
-    public long userRegister(String userAccount, String userPassword, String checkPassword) {
+    public long userRegister(String userAccount, String userPassword, String checkPassword, String userRole) {
         // 1. Verification
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "The parameters are empty!");
@@ -46,6 +47,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         if (userPassword.length() < 8 || checkPassword.length() < 8) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "The user password is excessively brief");
+        }
+        if (!UserRoleEnum.getValues().contains(userRole)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The user role is not valid!");
         }
         // 密码和校验密码相同
         if (!userPassword.equals(checkPassword)) {
@@ -67,6 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             user.setUserPassword(encryptPassword);
             String userName = UserConstant.USER_NAME_PREFIX + RandomUtil.randomString(6);
             user.setUserName(userName);
+            user.setUserRole(userRole);
             boolean saveResult = this.save(user);
             if (!saveResult) {
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR, "The registration has failed due to a database error！");

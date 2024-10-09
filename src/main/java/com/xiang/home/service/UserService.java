@@ -19,9 +19,10 @@ public interface UserService extends IService<User> {
      * @param userAccount   user account
      * @param userPassword  user password
      * @param checkPassword check password
+     * @param userRole      user role
      * @return new User id
      */
-    long userRegister(String userAccount, String userPassword, String checkPassword);
+    long userRegister(String userAccount, String userPassword, String checkPassword, String userRole);
 
 
     /**
